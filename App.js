@@ -1,20 +1,46 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 export default function App() {
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    let openImagePickerAsync = async () => {
+        let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+
+        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+        if (pickerResult.cancelled === true) {
+            return;
+        }
+        setSelectedImage({ localUri: pickerResult.uri });
+    };
+
     return (
         <View style={styles.container}>
-            <Image
-                style={styles.image}
-                source={{ uri: "https://picsum.photos/id/237/200/300" }}
-            />
+            {selectedImage !== null ? (
+                <Image
+                    source={{ uri: selectedImage.localUri }}
+                    style={styles.image}
+                />
+            ) : (
+                <Image
+                    style={styles.image}
+                    source={{ uri: "https://picsum.photos/id/237/300/300" }}
+                />
+            )}
             <Text style={styles.text}>
                 To share a photo from your phone {"\n"} with a friend, just
                 press the button below!
             </Text>
             <TouchableOpacity
-                onPress={() => alert("Pick again !")}
+                onPress={openImagePickerAsync}
                 style={{ marginTop: 20, backgroundColor: "#56CCF2" }}
             >
                 <Text style={{ fontSize: 20, color: "#fff" }}>
@@ -39,6 +65,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: 200,
         height: 200,
+        resizeMode: "contain",
     },
     text: {
         textAlign: "center",
