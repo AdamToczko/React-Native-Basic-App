@@ -2,12 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
-    SplashScreen.preventAutoHideAsync();
-    setTimeout(SplashScreen.hideAsync, 5000);
-
     const [selectedImage, setSelectedImage] = useState(null);
 
     let openImagePickerAsync = async () => {
