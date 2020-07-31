@@ -40,22 +40,18 @@ export const AddingImage = () => {
             </Text>
             <TouchableOpacity
                 onPress={openImagePickerAsync}
-                style={{ marginTop: 20, backgroundColor: "#56CCF2" }}
+                style={styles.button}
             >
-                <Text style={{ fontSize: 20, color: "#fff" }}>
-                    Pick a photo
-                </Text>
+                <Text style={styles.buttonText}>Pick a photo</Text>
             </TouchableOpacity>
         </View>
     );
 };
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: " rgb(250,250,250)",
         alignItems: "center",
         justifyContent: "flex-start",
         paddingBottom: 10,
-        width: "100%",
     },
     image: {
         marginTop: 40,
@@ -67,5 +63,15 @@ const styles = StyleSheet.create({
     text: {
         textAlign: "center",
         fontSize: 20,
+    },
+    button: {
+        marginTop: 20,
+        backgroundColor: "#56CCF2",
+    },
+    buttonText: {
+        fontSize: 16,
+        color: "#fff",
+        padding: 5,
+        textTransform: "uppercase",
     },
 });
