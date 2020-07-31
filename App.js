@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { AddingImage } from "./components/AddingImage";
 import { InputList } from "./components/InputList";
 import { ShowList } from "./components/ShowList";
@@ -9,8 +9,17 @@ export default function App() {
     const [listItems, setListItems] = useState([]);
 
     const addListHandler = (item) => {
-        setListItems((currentList) => [...currentList, item]);
+        setListItems((currentList) => [
+            ...currentList,
+            { id: Math.random().toString(), value: item },
+        ]);
     };
+    const removeListItem = (index) => {
+        setListItems((currentList) => {
+            return currentList.filter((element) => element.id !== index);
+        });
+    };
+
     return (
         <View style={styles.container}>
             <View>
@@ -19,15 +28,24 @@ export default function App() {
             </View>
 
             <InputList onAddListItem={addListHandler} />
-            <ScrollView style={styles.scroll}>
-                <ShowList listItems={listItems} />
-            </ScrollView>
+            <FlatList
+                keyExtractor={(item, index) => item.id}
+                data={listItems}
+                renderItem={(itemData) => (
+                    <View style={styles.list}>
+                        <ShowList
+                            id={itemData.item.id}
+                            listItem={itemData.item.value}
+                            onDelete={removeListItem}
+                        />
+                    </View>
+                )}
+            />
 
             <StatusBar style="auto" />
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -39,5 +57,9 @@ const styles = StyleSheet.create({
     text: {
         textAlign: "center",
         paddingBottom: 10,
+        fontSize: 20,
+    },
+    list: {
+        padding: 5,
     },
 });
