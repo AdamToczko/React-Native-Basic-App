@@ -1,23 +1,29 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Button } from "react-native";
 import { AddingImage } from "./components/AddingImage";
 import { InputList } from "./components/InputList";
 import { ShowList } from "./components/ShowList";
 
 export default function App() {
     const [listItems, setListItems] = useState([]);
+    const [addMode, setAddMode] = useState(false);
 
     const addListHandler = (item) => {
         setListItems((currentList) => [
             ...currentList,
             { id: Math.random().toString(), value: item },
         ]);
+        setAddMode(false);
     };
     const removeListItem = (index) => {
         setListItems((currentList) => {
             return currentList.filter((element) => element.id !== index);
         });
+    };
+
+    const cancelListAddHandler = () => {
+        setAddMode(false);
     };
 
     return (
@@ -26,8 +32,12 @@ export default function App() {
                 <AddingImage />
                 <Text style={styles.text}>Below you can make a Todo list</Text>
             </View>
-
-            <InputList onAddListItem={addListHandler} />
+            <Button title="Add New Item" onPress={() => setAddMode(true)} />
+            <InputList
+                visible={addMode}
+                onAddListItem={addListHandler}
+                onCancel={cancelListAddHandler}
+            />
             <FlatList
                 keyExtractor={(item, index) => item.id}
                 data={listItems}
