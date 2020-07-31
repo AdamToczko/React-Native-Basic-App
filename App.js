@@ -2,12 +2,14 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { AddingImage } from "./components/AddingImage";
+import { InputList } from "./components/InputList";
 
 export default function App() {
     return (
         <View style={styles.container}>
             <AddingImage />
-            <Text>Hello</Text>
+            <Text>Below you can make a Todo list</Text>
+            <InputList />
             <StatusBar style="auto" />
         </View>
     );

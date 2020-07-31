@@ -52,7 +52,6 @@ export const AddingImage = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: " rgb(250,250,250)",
-        backgroundColor: "yellow",
         alignItems: "center",
         justifyContent: "flex-start",
         paddingBottom: 10,
