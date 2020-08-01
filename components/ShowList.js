@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { AlertDelete } from "./AlertDelete";
 
 export const ShowList = (props) => {
     return (
         <TouchableOpacity
             activeOpacity={0.6}
-            onPress={props.onDelete.bind(this, props.id)}
+            onPress={() => AlertDelete(props)}
         >
             <View style={styles.listItem}>
                 <Text>{props.listItem}</Text>
