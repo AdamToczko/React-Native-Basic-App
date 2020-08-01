@@ -4,8 +4,13 @@ import { StyleSheet, Text, View, FlatList, Button } from "react-native";
 import { AddingImage } from "./components/AddingImage";
 import { InputList } from "./components/InputList";
 import { ShowList } from "./components/ShowList";
+import * as SplashScreen from "expo-splash-screen";
 
 export default function App() {
+    //FIXME: to be removed, only for testing purposes.
+    SplashScreen.preventAutoHideAsync();
+    setTimeout(SplashScreen.hideAsync, 3000);
+
     const [listItems, setListItems] = useState([]);
     const [addMode, setAddMode] = useState(false);
 
@@ -32,7 +37,7 @@ export default function App() {
                 <AddingImage />
                 <Text style={styles.text}>Below you can make a Todo list</Text>
             </View>
-            <Button title="Add New Item" onPress={() => setAddMode(true)} />
+            <Button title="ADD NEW ITEM" onPress={() => setAddMode(true)} />
             <InputList
                 visible={addMode}
                 onAddListItem={addListHandler}
